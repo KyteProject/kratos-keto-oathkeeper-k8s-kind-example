@@ -1,0 +1,55 @@
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    image: kindest/node:latest
+    kubeadmConfigPatches:
+    - |
+      kind: InitConfiguration
+      nodeRegistration:
+        kubeletExtraArgs:
+          node-labels: "ingress-ready=true"
+    extraPortMappings:
+      # Postgres
+      - containerPort: 5432
+        hostPort: 5432
+
+      # oath-api
+      - containerPort: 4456
+        hostPort: 4456
+      # oath-proxy
+      - containerPort: 4455
+        hostPort: 4455
+      # keto-metrics
+      - containerPort: 4468
+        hostPort: 4468
+      # keto-write
+      - containerPort: 4457
+        hostPort: 4457
+
+      # kratos-http-admin
+      - containerPort: 4434
+        hostPort: 4434
+      # kratos-http-public
+      - containerPort: 4433
+        hostPort: 4433
+
+      # mailer-ui
+      - containerPort: 4436
+        hostPort: 4436
+      # mailer-smtp
+      - containerPort: 1025
+        hostPort: 1025
+      # mailer-admin
+      - containerPort: 4437
+        hostPort: 4437
+
+      # http
+      - containerPort: 80
+        hostPort: 80
+      # admin-ui
+      - containerPort: 3000
+        hostPort: 3000
+
+  - role: worker
+  image: kindest/node:latest

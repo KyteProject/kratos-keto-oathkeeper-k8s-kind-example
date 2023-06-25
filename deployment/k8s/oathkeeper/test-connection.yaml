@@ -6,17 +6,17 @@ metadata:
   namespace: default
   labels:
     app.kubernetes.io/name: oathkeeper
-    app.kubernetes.io/version: "v0.38.25-beta.1"
+    app.kubernetes.io/version: "v0.40.3"
   annotations:
     "helm.sh/hook": test-success
 spec:
   containers:
     - name: liveness-probe
       image: busybox
-      command: [ "wget" ]
-      args: [ "http://test-oathkeeper-api:4456/health/alive" ]
+      command: ["wget"]
+      args: ["http://test-oathkeeper-api:4456/health/alive"]
     - name: readiness-probe
       image: busybox
-      command: [ "wget" ]
-      args: [ "http://test-oathkeeper-api:4456/health/ready" ]
+      command: ["wget"]
+      args: ["http://test-oathkeeper-api:4456/health/ready"]
   restartPolicy: Never
